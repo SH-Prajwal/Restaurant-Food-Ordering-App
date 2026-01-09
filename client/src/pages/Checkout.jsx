@@ -30,27 +30,24 @@ const Checkout = () => {
     }
   };
 
-  // Calculate subtotal, GST (for non-alcoholic), VAT (for alcoholic)
   const calculateBill = () => {
     let subtotal = 0;
-    let gstAmount = 0; // 5% GST (2.5% CGST + 2.5% SGST)
-    let vatAmount = 0; // 20% VAT for alcohol
+    let gstAmount = 0; 
+    let vatAmount = 0;
 
     cart.forEach((item) => {
       const itemTotal = item.price * item.quantity;
       subtotal += itemTotal;
 
       if (item.isAlcoholic) {
-        // VAT 20% for alcoholic items
         vatAmount += itemTotal * 0.2;
       } else {
-        // GST 5% for non-alcoholic items
         gstAmount += itemTotal * 0.05;
       }
     });
 
-    const cgst = gstAmount / 2; // 2.5%
-    const sgst = gstAmount / 2; // 2.5%
+    const cgst = gstAmount / 2;
+    const sgst = gstAmount / 2;
     const totalBeforeDiscount = subtotal + gstAmount + vatAmount;
 
     let discountAmount = 0;
@@ -213,7 +210,6 @@ const Checkout = () => {
               </div>
             </div>
 
-            {/* Bill Summary */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-xl shadow-md p-6 sticky top-4 overflow-hidden">
                 {showCelebration && (
@@ -237,7 +233,6 @@ const Checkout = () => {
                   Bill Summary
                 </h2>
 
-                {/* Coupon Section */}
                 {!appliedCoupon ? (
                   <div className="mb-6">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -261,7 +256,6 @@ const Checkout = () => {
                         Apply
                       </button>
                     </div>
-                    {/* Available Coupons */}
                     {coupons.length > 0 && (
                       <div className="mt-3">
                         <p className="text-xs text-gray-500 mb-2">
@@ -323,7 +317,6 @@ const Checkout = () => {
                     <span>₹{bill.subtotal.toFixed(2)}</span>
                   </div>
 
-                  {/* Tax Breakdown */}
                   {bill.gstAmount > 0 && (
                     <>
                       <div className="flex justify-between text-gray-600 text-sm pl-4">

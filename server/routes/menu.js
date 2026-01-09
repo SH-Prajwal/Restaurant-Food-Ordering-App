@@ -5,7 +5,6 @@ const FoodItem = require("../models/FoodItem");
 const auth = require("../middleware/auth");
 const adminAuth = require("../middleware/adminAuth");
 
-// Get all categories (public)
 router.get("/categories", async (req, res) => {
   try {
     const categories = await Category.find().sort({ createdAt: 1 });
@@ -15,7 +14,6 @@ router.get("/categories", async (req, res) => {
   }
 });
 
-// Get all food items (public)
 router.get("/items", async (req, res) => {
   try {
     const items = await FoodItem.find()
@@ -27,7 +25,6 @@ router.get("/items", async (req, res) => {
   }
 });
 
-// Get items by category (public)
 router.get("/items/category/:categoryId", async (req, res) => {
   try {
     const items = await FoodItem.find({ categoryId: req.params.categoryId });
@@ -37,7 +34,6 @@ router.get("/items/category/:categoryId", async (req, res) => {
   }
 });
 
-// Create new category (admin only)
 router.post("/category", auth, adminAuth, async (req, res) => {
   try {
     const { name, description, imageUrl } = req.body;
@@ -60,7 +56,6 @@ router.post("/category", auth, adminAuth, async (req, res) => {
   }
 });
 
-// Create new food item (admin only)
 router.post("/item", auth, adminAuth, async (req, res) => {
   try {
     const { name, description, price, categoryId, imageUrl, isAvailable } =
@@ -85,7 +80,6 @@ router.post("/item", auth, adminAuth, async (req, res) => {
   }
 });
 
-// Update food item (admin only)
 router.put("/item/:id", auth, adminAuth, async (req, res) => {
   try {
     const { name, description, price, categoryId, imageUrl, isAvailable } =
@@ -107,7 +101,6 @@ router.put("/item/:id", auth, adminAuth, async (req, res) => {
   }
 });
 
-// Update category (admin only)
 router.put("/category/:id", auth, adminAuth, async (req, res) => {
   try {
     const { name, description, imageUrl } = req.body;
@@ -137,7 +130,6 @@ router.put("/category/:id", auth, adminAuth, async (req, res) => {
   }
 });
 
-// Delete food item (admin only)
 router.delete("/item/:id", auth, adminAuth, async (req, res) => {
   try {
     const item = await FoodItem.findByIdAndDelete(req.params.id);
@@ -152,10 +144,8 @@ router.delete("/item/:id", auth, adminAuth, async (req, res) => {
   }
 });
 
-// Delete category (admin only)
 router.delete("/category/:id", auth, adminAuth, async (req, res) => {
   try {
-    // Check if category has items
     const itemsCount = await FoodItem.countDocuments({
       categoryId: req.params.id,
     });

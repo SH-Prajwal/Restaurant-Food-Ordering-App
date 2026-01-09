@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
 
-      // Redirect based on role
       if (userData.role === "admin") {
         navigate("/admin");
       } else {

@@ -5,19 +5,16 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const auth = require("../middleware/auth");
 
-// Signup route
 router.post("/signup", async (req, res) => {
   try {
     const { email, mobile, password } = req.body;
 
-    // Validate input
     if ((!email && !mobile) || !password) {
       return res.status(400).json({
         message: "Please provide email or mobile number and password",
       });
     }
 
-    // Check if user already exists
     let existingUser;
     if (email) {
       existingUser = await User.findOne({ email });
@@ -29,10 +26,8 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
     const userData = {
       password: hashedPassword,
       role: "customer",
@@ -43,7 +38,6 @@ router.post("/signup", async (req, res) => {
 
     const user = await User.create(userData);
 
-    // Generate token
     const token = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
@@ -67,19 +61,16 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// Login route
 router.post("/login", async (req, res) => {
   try {
     const { email, mobile, password } = req.body;
 
-    // Validate input
     if ((!email && !mobile) || !password) {
       return res.status(400).json({
         message: "Please provide email or mobile number and password",
       });
     }
 
-    // Find user
     let user;
     if (email) {
       user = await User.findOne({ email });
@@ -91,13 +82,11 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Check password
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Generate token
     const token = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
@@ -121,7 +110,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Update profile route
 router.put("/update-profile", auth, async (req, res) => {
   try {
     const { name, email, mobile } = req.body;
@@ -137,7 +125,6 @@ router.put("/update-profile", auth, async (req, res) => {
 
     console.log("[Update Profile] Processed updateData:", updateData);
 
-    // Check if email/mobile already exists for another user
     if (email) {
       const existingUser = await User.findOne({ email, _id: { $ne: userId } });
       if (existingUser) {
@@ -183,7 +170,6 @@ router.put("/update-profile", auth, async (req, res) => {
   }
 });
 
-// Change password route
 router.put("/change-password", auth, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
@@ -213,7 +199,6 @@ router.put("/change-password", auth, async (req, res) => {
 
     console.log("[Change Password] User found, checking password");
 
-    // Check current password
     const isValidPassword = await bcrypt.compare(
       currentPassword,
       user.password
@@ -225,10 +210,8 @@ router.put("/change-password", auth, async (req, res) => {
 
     console.log("[Change Password] Password verified, hashing new password");
 
-    // Hash new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Update password
     user.password = hashedPassword;
     await user.save();
 

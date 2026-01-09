@@ -10,28 +10,23 @@ const couponRoutes = require("./routes/coupons");
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Database connection
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/menu", menuRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/coupons", couponRoutes);
 
-// Health check
 app.get("/", (req, res) => {
   res.json({ message: "Restaurant API is running" });
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res

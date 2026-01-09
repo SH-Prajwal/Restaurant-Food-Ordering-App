@@ -42,7 +42,6 @@ const Cart = () => {
           <h1 className="text-4xl font-bold text-gray-800 mb-8">Your Cart</h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
               {cart.map((item) => (
                 <div
@@ -125,7 +124,7 @@ const Cart = () => {
                     </div>
                   </div>
                 </div>
-
+                
                 <button
                   onClick={() => navigate("/checkout")}
                   className="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition"

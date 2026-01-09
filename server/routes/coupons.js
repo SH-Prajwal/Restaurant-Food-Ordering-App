@@ -4,7 +4,6 @@ const Coupon = require("../models/Coupon");
 const auth = require("../middleware/auth");
 const adminAuth = require("../middleware/adminAuth");
 
-// Get all active coupons (public)
 router.get("/", async (req, res) => {
   try {
     const coupons = await Coupon.find({ isActive: true }).sort({
@@ -16,7 +15,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get all coupons (admin only)
 router.get("/all", auth, adminAuth, async (req, res) => {
   try {
     const coupons = await Coupon.find().sort({ createdAt: -1 });
@@ -27,7 +25,6 @@ router.get("/all", auth, adminAuth, async (req, res) => {
   }
 });
 
-// Create new coupon (admin only)
 router.post("/create", auth, adminAuth, async (req, res) => {
   try {
     const { code, discountPercent, minOrderAmount, description } = req.body;
@@ -45,7 +42,6 @@ router.post("/create", auth, adminAuth, async (req, res) => {
       });
     }
 
-    // Check if coupon code already exists
     const existingCoupon = await Coupon.findOne({
       code: code.toUpperCase(),
     });
@@ -77,7 +73,6 @@ router.post("/create", auth, adminAuth, async (req, res) => {
   }
 });
 
-// Delete coupon (admin only)
 router.delete("/:id", auth, adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
@@ -98,7 +93,6 @@ router.delete("/:id", auth, adminAuth, async (req, res) => {
   }
 });
 
-// Toggle coupon active status (admin only)
 router.put("/:id/toggle", auth, adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
@@ -130,7 +124,6 @@ router.put("/:id/toggle", auth, adminAuth, async (req, res) => {
   }
 });
 
-// Validate and apply coupon
 router.post("/apply", auth, async (req, res) => {
   try {
     const { code, orderAmount } = req.body;

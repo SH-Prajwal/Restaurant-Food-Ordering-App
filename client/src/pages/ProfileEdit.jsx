@@ -175,7 +175,6 @@ const ProfileEdit = () => {
               </form>
             </div>
 
-            {/* Change Password - Only for customers */}
             {user?.role === "customer" && (
               <div className="bg-white rounded-xl shadow-md p-6">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
@@ -288,7 +287,6 @@ const ProfileEdit = () => {
             )}
           </div>
 
-          {/* User Info Display */}
           <div className="mt-8 bg-gradient-to-r from-orange-100 to-orange-50 rounded-xl p-6">
             <h3 className="text-xl font-bold text-gray-800 mb-4">
               Account Information

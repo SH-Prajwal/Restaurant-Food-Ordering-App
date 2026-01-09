@@ -339,7 +339,6 @@ const AdminDashboard = () => {
               </form>
             </div>
 
-            {/* Add Food Item Form */}
             <div className="bg-white rounded-xl shadow-md p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center space-x-2">
                 <FaPlus className="text-orange-600" />
@@ -457,7 +456,6 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Categories List */}
           <div className="bg-white rounded-xl shadow-md p-6 mb-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">
               Manage Categories
@@ -511,7 +509,6 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Food Items List */}
           <div className="bg-white rounded-xl shadow-md p-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">
               Manage Food Items
@@ -585,9 +582,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Coupon Management Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            {/* Add Coupon Form */}
             <div className="bg-white rounded-xl shadow-md p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center space-x-2">
                 <FaPlus className="text-orange-600" />
@@ -677,7 +672,6 @@ const AdminDashboard = () => {
               </form>
             </div>
 
-            {/* Coupons List */}
             <div className="bg-white rounded-xl shadow-md p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
                 Manage Coupons
@@ -753,7 +747,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Edit Category Modal */}
       {showEditCategoryModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full mx-4">
@@ -841,7 +834,6 @@ const AdminDashboard = () => {
         </div>
       )}
 
-      {/* Edit Item Modal */}
       {showEditItemModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">

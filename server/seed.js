@@ -8,11 +8,9 @@ const Coupon = require("./models/Coupon");
 
 const seedDatabase = async () => {
   try {
-    // Connect to MongoDB
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("Connected to MongoDB");
 
-    // Clear existing data
     await User.deleteMany({});
     await Category.deleteMany({});
     await FoodItem.deleteMany({});
@@ -20,15 +18,92 @@ const seedDatabase = async () => {
     console.log("Cleared existing data");
 
     // Create admin user
-    const hashedPassword = await bcrypt.hash("Admin@123", 10);
+    const hashedAdminPassword = await bcrypt.hash("Admin@123", 10);
     const admin = await User.create({
+      name: "Admin User",
       email: "admin@restaurant.com",
-      password: hashedPassword,
+      mobile: "9999999999",
+      password: hashedAdminPassword,
       role: "admin",
     });
     console.log("Admin user created");
 
-    // Create categories
+    // Create 10 customer users
+    const customerUsers = [
+      {
+        name: "John Doe",
+        email: "john@gmail.com",
+        mobile: "9876543210",
+        password: "john123",
+      },
+      {
+        name: "Ravi Kumar",
+        email: "ravi@xyz.com",
+        mobile: "9876543211",
+        password: "ravi123",
+      },
+      {
+        name: "Priya Sharma",
+        email: "priya@gmail.com",
+        mobile: "9876543212",
+        password: "priya123",
+      },
+      {
+        name: "Amit Patel",
+        email: "amit@gmail.com",
+        mobile: "9876543213",
+        password: "amit123",
+      },
+      {
+        name: "Sneha Singh",
+        email: "sneha@gmail.com",
+        mobile: "9876543214",
+        password: "sneha123",
+      },
+      {
+        name: "Rajesh Verma",
+        email: "rajesh@yahoo.com",
+        mobile: "9876543215",
+        password: "rajesh123",
+      },
+      {
+        name: "Anjali Reddy",
+        email: "anjali@gmail.com",
+        mobile: "9876543216",
+        password: "anjali123",
+      },
+      {
+        name: "Vikram Malhotra",
+        email: "vikram@outlook.com",
+        mobile: "9876543217",
+        password: "vikram123",
+      },
+      {
+        name: "Neha Gupta",
+        email: "neha@gmail.com",
+        mobile: "9876543218",
+        password: "neha123",
+      },
+      {
+        name: "Arjun Mehta",
+        email: "arjun@gmail.com",
+        mobile: "9876543219",
+        password: "arjun123",
+      },
+    ];
+
+    for (const userData of customerUsers) {
+      const hashedPassword = await bcrypt.hash(userData.password, 10);
+      await User.create({
+        name: userData.name,
+        email: userData.email,
+        mobile: userData.mobile,
+        password: hashedPassword,
+        role: "customer",
+      });
+    }
+    console.log("Customer users created");
+
     const categories = await Category.insertMany([
       {
         name: "Breakfast",
@@ -81,9 +156,7 @@ const seedDatabase = async () => {
     ]);
     console.log("Categories created");
 
-    // Create food items
     const foodItems = [
-      // Breakfast
       {
         name: "Masala Dosa",
         description: "Crispy rice crepe filled with spiced potato filling",
@@ -121,7 +194,6 @@ const seedDatabase = async () => {
           "https://images.unsplash.com/photo-1730191843435-073792ba22bc?w=400",
         isAvailable: true,
       },
-      // Starters
       {
         name: "Paneer Tikka",
         description: "Grilled cottage cheese marinated in spices",
@@ -160,7 +232,6 @@ const seedDatabase = async () => {
           "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400",
         isAvailable: true,
       },
-      // Main Course
       {
         name: "Butter Chicken",
         description: "Tender chicken in rich tomato and butter gravy",
@@ -206,7 +277,6 @@ const seedDatabase = async () => {
           "https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?w=400",
         isAvailable: true,
       },
-      // Breads
       {
         name: "Butter Naan",
         description: "Leavened flatbread brushed with butter",
@@ -243,7 +313,6 @@ const seedDatabase = async () => {
           "https://images.unsplash.com/photo-1668357530437-72a12c660f94?w=400",
         isAvailable: true,
       },
-      // Rice & Biryani
       {
         name: "Veg Biryani",
         description: "Aromatic basmati rice with mixed vegetables",
@@ -280,7 +349,6 @@ const seedDatabase = async () => {
           "https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?w=400",
         isAvailable: true,
       },
-      // Desserts
       {
         name: "Gulab Jamun",
         description: "Deep fried milk dumplings in sugar syrup",
@@ -317,7 +385,6 @@ const seedDatabase = async () => {
           "https://images.unsplash.com/photo-1517244683847-7456b63c5969?w=400",
         isAvailable: true,
       },
-      // Beverages
       {
         name: "Masala Chai",
         description: "Traditional Indian spiced tea",
@@ -443,7 +510,6 @@ const seedDatabase = async () => {
     await FoodItem.insertMany(foodItems);
     console.log("Food items created");
 
-    // Create coupons
     const coupons = await Coupon.insertMany([
       {
         code: "WELCOME10",

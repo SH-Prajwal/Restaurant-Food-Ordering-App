@@ -68,7 +68,6 @@ const Navbar = () => {
                   </>
                 )}
 
-                {/* Profile Dropdown */}
                 <div className="relative">
                   <button
                     onClick={() => setShowDropdown(!showDropdown)}

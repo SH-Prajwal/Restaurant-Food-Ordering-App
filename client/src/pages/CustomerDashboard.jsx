@@ -46,7 +46,6 @@ const CustomerDashboard = () => {
     : foodItems.filter((item) => item.isAvailable);
 
   const handleAddToCart = (item) => {
-    // Check if item is alcoholic, show age verification
     if (item.isAlcoholic) {
       setSelectedItem(item);
       setShowAgeVerification(true);
@@ -83,7 +82,6 @@ const CustomerDashboard = () => {
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-4xl font-bold text-gray-800 mb-8">Our Menu</h1>
 
-          {/* Category Tabs */}
           <div className="flex space-x-2 mb-8 overflow-x-auto pb-2">
             {categories.map((category) => (
               <button
@@ -100,7 +98,6 @@ const CustomerDashboard = () => {
             ))}
           </div>
 
-          {/* Food Items Grid */}
           {filteredItems.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
               No items available in this category
@@ -149,7 +146,6 @@ const CustomerDashboard = () => {
         </div>
       </div>
 
-      {/* Age Verification Modal */}
       {showAgeVerification && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full mx-4">
